@@ -233,6 +233,8 @@ extern float max_pos[3];
 extern bool axis_known_position[3];
 extern float zprobe_zoffset;
 extern int fanSpeed;
+extern int fanSpeed1;
+extern uint8_t active_fan;
 #ifdef BARICUDA
 extern int ValvePressure;
 extern int EtoPPressure;
@@ -273,4 +275,3 @@ extern void digipot_i2c_init();
 #endif
 
 extern void calculate_volumetric_multipliers();
-
