@@ -61,9 +61,9 @@
 //This is for controlling a fan to cool down the stepper drivers
 //it will turn on when any driver is enabled
 //and turn off after the set amount of seconds from last driver being disabled again
-#define CONTROLLERFAN_PIN -1 //Pin used for the fan to cool controller (-1 to disable)
+#define CONTROLLERFAN_PIN 2 //Pin used for the fan to cool controller (-1 to disable)
 #define CONTROLLERFAN_SECS 60 //How many seconds, after all motors were disabled, the fan should run
-#define CONTROLLERFAN_SPEED 255  // == full speed
+#define CONTROLLERFAN_SPEED 150  // == full speed
 
 // When first starting the main fan, run it at full speed for the
 // given number of milliseconds.  This gets the fan spinning reliably
@@ -76,9 +76,9 @@
 // Multiple extruders can be assigned to the same pin in which case
 // the fan will turn on when any selected extruder is above the threshold.
 #define EXTRUDER_0_AUTO_FAN_PIN   -1
-#define EXTRUDER_1_AUTO_FAN_PIN   -1
+#define EXTRUDER_1_AUTO_FAN_PIN   5
 #define EXTRUDER_2_AUTO_FAN_PIN   -1
-#define EXTRUDER_AUTO_FAN_TEMPERATURE 50
+#define EXTRUDER_AUTO_FAN_TEMPERATURE 30
 #define EXTRUDER_AUTO_FAN_SPEED   255  // == full speed
 
 
@@ -215,8 +215,8 @@
 //homing hits the endstop, then retracts by this distance, before it tries to slowly bump again:
 #define X_HOME_RETRACT_MM 5
 #define Y_HOME_RETRACT_MM 5
-#define Z_HOME_RETRACT_MM 2
-//#define QUICK_HOME  //if this is defined, if both x and y are to be homed, a diagonal move will be performed initially.
+#define Z_HOME_RETRACT_MM 4
+#define QUICK_HOME  //if this is defined, if both x and y are to be homed, a diagonal move will be performed initially.
 
 #define AXIS_RELATIVE_MODES {false, false, false, false}
 #ifdef CONFIG_STEPPERS_TOSHIBA
@@ -270,10 +270,10 @@
 #define MICROSTEP16 HIGH,HIGH
 
 // Microstep setting (Only functional when stepper driver microstep pins are connected to MCU.
-#define MICROSTEP_MODES {16,16,16,16,16} // [1,2,4,8,16]
+#define MICROSTEP_MODES {16,16,4,16,16} // [1,2,4,8,16]
 
 // Motor Current setting (Only functional when motor driver current ref pins are connected to a digital trimpot on supported boards)
-#define DIGIPOT_MOTOR_CURRENT {135,135,135,135,135} // Values 0-255 (RAMBO 135 = ~0.75A, 185 = ~1A)
+#define DIGIPOT_MOTOR_CURRENT {175,175,220,135,130} // Values 0-255 (RAMBO 135 = ~0.75A, 185 = ~1A)
 
 // uncomment to enable an I2C based DIGIPOT like on the Azteeg X3 Pro
 //#define DIGIPOT_I2C
