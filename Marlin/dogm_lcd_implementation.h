@@ -92,11 +92,11 @@ static void lcd_implementation_init()
 	digitalWrite(LCD_PIN_BL, HIGH);
 #endif
 
-        u8g.setContrast(lcd_contrast);	
+        u8g.setContrast(lcd_contrast);
 	//  Uncomment this if you have the first generation (V1.10) of STBs board
 	//  pinMode(17, OUTPUT);	// Enable LCD backlight
 	//  digitalWrite(17, HIGH);
-	
+
 	u8g.firstPage();
 	do {
 		u8g.setFont(u8g_font_6x10_marlin);
@@ -117,26 +117,39 @@ static void lcd_implementation_init()
 	u8g.setRot270();	// Rotate screen by 270°
 #endif
 
-   
+
 	u8g.firstPage();
 	do {
 			// RepRap init bmp
-			u8g.drawBitmapP(0,0,START_BMPBYTEWIDTH,START_BMPHEIGHT,start_bmp);
+			// u8g.drawBitmapP(0,0,START_BMPBYTEWIDTH,START_BMPHEIGHT,start_bmp);
+			// LulzBot init bmp
+			u8g.drawBitmapP(0,0,LULZBOT_BMPBYTEWIDTH,LULZBOT_BMPHEIGHT,lulzbot_bmp);
 			// Welcome message
+			// u8g.setFont(u8g_font_6x10_marlin);
+			// u8g.drawStr(62,10,"MARLIN");
+			// u8g.setFont(u8g_font_5x8);
+			// u8g.drawStr(62,19,"V1.0.2");
+			// u8g.setFont(u8g_font_6x10_marlin);
+			// u8g.drawStr(62,28,"by ErikZalm");
+			// u8g.drawStr(62,41,"DOGM128 LCD");
+			// u8g.setFont(u8g_font_5x8);
+			// u8g.drawStr(62,48,"enhancements");
+			// u8g.setFont(u8g_font_5x8);
+			// u8g.drawStr(62,55,"by STB, MM");
+			// u8g.drawStr(62,61,"uses u");
+			// u8g.drawStr90(92,57,"8");
+			// u8g.drawStr(100,61,"glib");
+			u8g.setFont(u8g_font_10x20);
+			u8g.drawStr(61,17,"TAZ");
+			u8g.setFont(u8g_font_5x8);
+			u8g.drawStr(93,17,"v4.1");
 			u8g.setFont(u8g_font_6x10_marlin);
-			u8g.drawStr(62,10,"MARLIN"); 
+			u8g.drawStr(63,29,"E3D Config");
 			u8g.setFont(u8g_font_5x8);
-			u8g.drawStr(62,19,"V1.0.2");
-			u8g.setFont(u8g_font_6x10_marlin);
-			u8g.drawStr(62,28,"by ErikZalm");
-			u8g.drawStr(62,41,"DOGM128 LCD");
+			u8g.drawStr(63,41,"LulzBot.com");
 			u8g.setFont(u8g_font_5x8);
-			u8g.drawStr(62,48,"enhancements");
-			u8g.setFont(u8g_font_5x8);
-			u8g.drawStr(62,55,"by STB, MM");
-			u8g.drawStr(62,61,"uses u");
-			u8g.drawStr90(92,57,"8");
-			u8g.drawStr(100,61,"glib");
+			u8g.drawStr(63,53,"Firmware:");
+			u8g.drawStr(63,62,"Marlin v"SHORT_BUILD_VERSION);
 	   } while( u8g.nextPage() );
 }
 
@@ -147,7 +160,7 @@ static void lcd_implementation_clear()
 // Check this article: http://arduino.cc/forum/index.php?topic=91395.25;wap2
 //
 //	u8g.firstPage();
-//	do {	
+//	do {
 //			u8g.setColorIndex(0);
 //			u8g.drawBox (0, 0, u8g.getWidth(), u8g.getHeight());
 //			u8g.setColorIndex(1);
@@ -188,12 +201,12 @@ static void lcd_implementation_status_screen()
 {
 
  static unsigned char fan_rot = 0;
- 
+
  u8g.setColorIndex(1);	// black on white
- 
+
  // Symbols menu graphics, animated fan
  u8g.drawBitmapP(9,1,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT, (blink % 2) && fanSpeed ? status_screen0_bmp : status_screen1_bmp);
- 
+
  #ifdef SDSUPPORT
  //SD Card Symbol
  u8g.drawBox(42,42,8,7);
@@ -202,10 +215,10 @@ static void lcd_implementation_status_screen()
  u8g.drawPixel(50,43);
  // Progress bar
  u8g.drawFrame(54,49,73,4);
- 
+
  // SD Card Progress bar and clock
  u8g.setFont(FONT_STATUSMENU);
- 
+
  if (IS_SD_PRINTING)
    {
 	// Progress bar
@@ -214,7 +227,7 @@ static void lcd_implementation_status_screen()
     else {
 			// do nothing
 		 }
- 
+
  u8g.setPrintPos(80,47);
  if(starttime != 0)
     {
@@ -227,7 +240,7 @@ static void lcd_implementation_status_screen()
 			lcd_printPGM(PSTR("--:--"));
 		 }
  #endif
- 
+
   // Extruders
   _draw_heater_status(6, 0);
   #if EXTRUDERS > 1
@@ -239,7 +252,7 @@ static void lcd_implementation_status_screen()
 
   // Heatbed
   _draw_heater_status(81, -1);
- 
+
  // Fan
  u8g.setFont(FONT_STATUSMENU);
  u8g.setPrintPos(104,27);
@@ -249,8 +262,8 @@ static void lcd_implementation_status_screen()
  #else
  u8g.print("---");
  #endif
- 
- 
+
+
  // X, Y, Z-Coordinates
  u8g.setFont(FONT_STATUSMENU);
  u8g.drawBox(0,29,128,10);
@@ -274,7 +287,7 @@ static void lcd_implementation_status_screen()
  u8g.setPrintPos(91,37);
  u8g.print(ftostr31(current_position[Z_AXIS]));
  u8g.setColorIndex(1);	// black on white
- 
+
  // Feedrate
  u8g.setFont(u8g_font_6x10_marlin);
  u8g.setPrintPos(3,49);
@@ -301,23 +314,23 @@ static void lcd_implementation_status_screen()
 	 u8g.print(itostr3(extrudemultiply));
 	 u8g.print('%');
 	}
- #endif 	
+ #endif
 
 }
 
 static void lcd_implementation_drawmenu_generic(uint8_t row, const char* pstr, char pre_char, char post_char)
 {
     char c;
-    
+
     uint8_t n = LCD_WIDTH - 1 - 2;
-		
+
 		if ((pre_char == '>') || (pre_char == LCD_STR_UPLEVEL[0] ))
 		   {
 			u8g.setColorIndex(1);		// black on white
 			u8g.drawBox (0, row*DOG_CHAR_HEIGHT + 3, 128, DOG_CHAR_HEIGHT);
 			u8g.setColorIndex(0);		// following text must be white on black
 		   } else u8g.setColorIndex(1); // unmarked text is black on white
-		
+
 		u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
 		u8g.print(pre_char == '>' ? ' ' : pre_char);	// Row selector is obsolete
 
@@ -331,7 +344,7 @@ static void lcd_implementation_drawmenu_generic(uint8_t row, const char* pstr, c
     while(n--){
 					u8g.print(' ');
 		}
-	   
+
 		u8g.print(post_char);
 		u8g.print(' ');
 		u8g.setColorIndex(1);		// restore settings to black on white
@@ -340,7 +353,7 @@ static void lcd_implementation_drawmenu_generic(uint8_t row, const char* pstr, c
 static void _drawmenu_setting_edit_generic(uint8_t row, const char* pstr, char pre_char, const char* data, bool pgm) {
   char c;
   uint8_t n = LCD_WIDTH - 1 - 2 - (pgm ? strlen_P(data) : strlen(data));
-		
+
   u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
   u8g.print(pre_char);
 
@@ -458,15 +471,17 @@ static void lcd_implementation_quick_feedback()
 
 #if BEEPER > -1
     SET_OUTPUT(BEEPER);
-    for(int8_t i=0;i<10;i++)
-    {
-		WRITE(BEEPER,HIGH);
-		delay(3);
-		WRITE(BEEPER,LOW);
-		delay(3);
-    }
+//    for(int8_t i=0;i<10;i++)
+//    {
+//		WRITE(BEEPER,HIGH);
+//		delay(3);
+//		WRITE(BEEPER,LOW);
+//		delay(3);
+//    }
+    // Beep note selection using pitches.h
+    tone(BEEPER,1047);
+                delay(10);
+    noTone(BEEPER);
 #endif
 }
 #endif//ULTRA_LCD_IMPLEMENTATION_DOGM_H
-
-
